@@ -83,6 +83,7 @@ export default function HeroSection() {
       <div className="container py-14 md:py-20 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-9 lg:gap-12 items-center">
           <div className="lg:col-span-5 z-10">
+            <div className="hero-carousel__copy" aria-live={paused ? "polite" : "off"} aria-atomic="true">
             <div className="hero-carousel__eyebrow">
               <span className="hero-carousel__eyebrow-dot" aria-hidden="true" />
               {slide.eyebrow}
@@ -93,6 +94,7 @@ export default function HeroSection() {
             <p key={slide.description} className="text-base md:text-lg text-[var(--text-muted)] leading-relaxed mb-7 max-w-lg hero-carousel__description animate-fade-up">
               {slide.description}
             </p>
+            </div>
             <div className="flex flex-col sm:flex-row gap-3 mb-8 hero-carousel__actions">
               <Link href={slide.primaryHref} className="btn btn-primary btn-lg">
                 {slide.primaryLabel}
@@ -164,7 +166,10 @@ export default function HeroSection() {
                 <button
                   type="button"
                   className="hero-carousel__pause"
-                  onClick={() => setManualPaused((value) => !value)}
+                  onClick={() => {
+                    setManualPaused((value) => !value);
+                    setInteractionPaused(false);
+                  }}
                   aria-label={manualPaused ? "Resume automatic slide rotation" : "Pause automatic slide rotation"}
                   aria-pressed={manualPaused}
                 >
