@@ -2740,7 +2740,6 @@ h2 { line-height: 1.13; }
 .container { width: min(var(--container-max), calc(100% - 3rem)); margin-inline: auto; }
 .section-py { padding-block: var(--section-py); }
 .section-label { color: #0d827c; letter-spacing: .13em; font-size: .76rem; font-weight: 800; }
-.heading-underline::after { background: linear-gradient(90deg, #0d9488, #5bc7d4); border-radius: 999px; }
 .btn { min-height: 46px; border-radius: 999px; padding: .78rem 1.25rem; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
 .btn:hover { transform: translateY(-2px); }
 .btn-cta { color: #fff; background: linear-gradient(135deg, #173f8a, #176b87); box-shadow: 0 8px 20px rgba(23,63,138,.18); }
@@ -2813,7 +2812,7 @@ h2 { line-height: 1.13; }
 }
 @media (max-width: 420px) {
   .container { width: calc(100% - 1.5rem); }
-  .btn { width: 100%; justify-content: center; }
+  .hero-carousel__actions .btn { width: 100%; justify-content: center; }
 }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
