@@ -1,0 +1,27 @@
+export const visualAssets = {
+  services: {
+    content: "content-development",
+    curriculum: "curriculum-design",
+    assessment: "custom-assessment-creation",
+    elearning: "e-learning-solutions",
+    editorial: "editorial-production",
+    accessibility: "digital-accessibility",
+    interactive: "interactive-content",
+    video: "educational-video-production",
+    migration: "tdx-migration",
+    qa: "quality-assurance",
+    technology: "it-solutions",
+    talent: "talent-staffing",
+  },
+  industries: {
+    publishers: "educational-publishers",
+    schools: "k12-schools",
+    edtech: "edtech",
+    universities: "universities",
+    corporate: "corporate-learning",
+    training: "training-providers",
+  },
+  technology: "it-solutions",
+  accessibility: "digital-accessibility",
+  process: "editorial-production",
+} as const;

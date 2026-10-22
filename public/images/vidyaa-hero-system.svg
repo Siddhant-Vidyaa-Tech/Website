@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="760" viewBox="0 0 960 760" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="850" y2="740" gradientUnits="userSpaceOnUse"><stop stop-color="#F5F8F8"/><stop offset="1" stop-color="#E7F0F1"/></linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#14877F"/><stop offset="1" stop-color="#106B71"/></linearGradient>
+    <filter id="shadow" x="80" y="54" width="820" height="700" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="960" height="760" rx="30" fill="url(#bg)"/>
+  <circle cx="820" cy="112" r="145" fill="#D8E9E6"/><circle cx="122" cy="668" r="130" fill="#DDEBEA"/>
+  <ellipse cx="504" cy="685" rx="354" ry="28" fill="#193A50" opacity=".10" filter="url(#shadow)"/>
+  <rect x="145" y="112" width="670" height="522" rx="20" fill="white" stroke="#D9E3E6" stroke-width="2"/>
+  <path d="M165 112h630a20 20 0 0 1 20 20v44H145v-44a20 20 0 0 1 20-20Z" fill="#F9FBFB"/>
+  <circle cx="173" cy="142" r="5" fill="#D7E0E2"/><circle cx="192" cy="142" r="5" fill="#D7E0E2"/><circle cx="211" cy="142" r="5" fill="#D7E0E2"/>
+  <rect x="246" y="134" width="190" height="15" rx="7.5" fill="#E8EEF0"/><rect x="704" y="132" width="72" height="19" rx="9.5" fill="#DCEDEA"/>
+  <rect x="174" y="199" width="168" height="405" rx="12" fill="#F7F9F9"/>
+  <text x="195" y="232" fill="#64808B" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1.2">YOUR LEARNING PATH</text>
+  <rect x="194" y="256" width="127" height="58" rx="8" fill="#E4F0EE"/><circle cx="212" cy="278" r="9" fill="#14877F"/><path d="m208 278 3 3 6-7" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="230" y="271" width="74" height="6" rx="3" fill="#48626E"/><rect x="230" y="284" width="54" height="5" rx="2.5" fill="#9AAEB4"/>
+  <circle cx="212" cy="344" r="9" fill="white" stroke="#AFC1C5" stroke-width="2"/><rect x="230" y="337" width="72" height="6" rx="3" fill="#7F969E"/><rect x="230" y="350" width="58" height="5" rx="2.5" fill="#C0CDD0"/>
+  <circle cx="212" cy="410" r="9" fill="white" stroke="#AFC1C5" stroke-width="2"/><rect x="230" y="403" width="68" height="6" rx="3" fill="#7F969E"/><rect x="230" y="416" width="50" height="5" rx="2.5" fill="#C0CDD0"/>
+  <circle cx="212" cy="476" r="9" fill="white" stroke="#AFC1C5" stroke-width="2"/><rect x="230" y="469" width="70" height="6" rx="3" fill="#7F969E"/><rect x="230" y="482" width="45" height="5" rx="2.5" fill="#C0CDD0"/>
+  <rect x="369" y="199" width="418" height="199" rx="12" fill="#F0F6F5"/>
+  <text x="396" y="231" fill="#66808B" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1.2">MODULE 03 · DIGITAL SCIENCE</text>
+  <text x="396" y="267" fill="#17384F" font-family="Arial,sans-serif" font-size="19" font-weight="700">Explore a connected system</text>
+  <rect x="396" y="283" width="173" height="7" rx="3.5" fill="#D5E0E1"/><rect x="396" y="299" width="133" height="7" rx="3.5" fill="#D5E0E1"/>
+  <rect x="396" y="327" width="144" height="42" rx="8" fill="url(#teal)"/><path d="m414 343 10 6-10 6v-12Z" fill="white"/><text x="435" y="353" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">Continue lesson</text>
+  <rect x="584" y="252" width="178" height="118" rx="10" fill="white" stroke="#DFE8E8"/><circle cx="673" cy="305" r="34" fill="#E6F0EF"/><path d="M661 281c8-11 26-13 36-4m3 12c8 15 0 35-15 40m-17 0c-15-7-21-25-13-39" stroke="#14877F" stroke-width="5" stroke-linecap="round"/><circle cx="673" cy="305" r="11" fill="#14877F"/><text x="614" y="356" fill="#54707B" font-family="Arial,sans-serif" font-size="10" font-weight="700">INTERACTIVE MODEL</text>
+  <rect x="369" y="418" width="251" height="166" rx="12" fill="white" stroke="#E1E8E9"/>
+  <text x="392" y="449" fill="#66808B" font-family="Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="1">QUICK CHECK</text>
+  <text x="392" y="475" fill="#17384F" font-family="Arial,sans-serif" font-size="15" font-weight="700">What changes in this system?</text>
+  <rect x="392" y="492" width="204" height="25" rx="6" fill="#E6F1EF"/><circle cx="405" cy="504" r="5" fill="#14877F"/><rect x="417" y="501" width="126" height="5" rx="2.5" fill="#58727B"/>
+  <rect x="392" y="524" width="176" height="20" rx="5" fill="#F5F7F7"/><circle cx="405" cy="534" r="4" fill="white" stroke="#BCCBCD"/><rect x="417" y="532" width="101" height="4" rx="2" fill="#A8B7BB"/>
+  <rect x="638" y="418" width="149" height="166" rx="12" fill="#17384F"/>
+  <text x="658" y="450" fill="#B9D7D4" font-family="Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="1">LEARNING INSIGHT</text>
+  <text x="658" y="489" fill="white" font-family="Arial,sans-serif" font-size="25" font-weight="700">78%</text><text x="658" y="507" fill="#C9D8DB" font-family="Arial,sans-serif" font-size="10">objective mastery</text>
+  <path d="M658 549c14-18 22 4 36-13s20 0 33-18 20 0 39-17" stroke="#67C2B2" stroke-width="3" stroke-linecap="round"/><path d="M658 565h105" stroke="#547080" stroke-width="1"/>
+  <rect x="416" y="640" width="128" height="14" rx="7" fill="#D2E1E0"/><rect x="442" y="654" width="77" height="9" rx="4.5" fill="#C4D4D4"/>
+</svg>
