@@ -14,7 +14,7 @@ export default function WhyVidyaaSection() {
             <p>We connect educational expertise with thoughtful content and technology, from early design through quality review and delivery.</p>
             <ul>{principles.map((item) => <li key={item}><span aria-hidden="true">✓</span>{item}</li>)}</ul>
           </div>
-          <div className="ecosystem-visual"><EcosystemDiagram className="ecosystem-diagram" /></div>
+          <div className="ecosystem-visual"><EcosystemDiagram /></div>
         </div>
       </div>
     </section>
