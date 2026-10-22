@@ -13,8 +13,8 @@ export default function PageHero({ label, headline, subtitle, variant = "navy", 
   const isNavy = variant === "navy";
   return (
     <section
-      className={`relative overflow-hidden py-16 md:py-20 ${
-        visual ? "bg-[var(--surface)] page-hero--visual" : isNavy ? "bg-[var(--primary)]" : "bg-[var(--surface)]"
+      className={`page-hero relative isolate overflow-hidden py-16 md:py-20 ${
+        visual ? "page-hero--visual" : isNavy ? "page-hero--navy" : "page-hero--light"
       }`}
       aria-label="Page header"
     >
@@ -23,7 +23,7 @@ export default function PageHero({ label, headline, subtitle, variant = "navy", 
       {!visual && <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white opacity-[0.03] pointer-events-none" aria-hidden="true" />}
 
       <div className={`container relative ${visual ? "page-hero-grid" : ""}`}>
-        <div>
+        <div className="page-hero__content">
           {label && <SectionLabel light={isNavy && !visual}>{label}</SectionLabel>}
           <h1 className={`max-w-3xl mt-2 mb-4 ${isNavy && !visual ? "text-white" : "text-[var(--text)]"}`}>
             {headline}
