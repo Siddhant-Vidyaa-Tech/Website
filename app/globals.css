@@ -17,7 +17,7 @@
   /* Professional brand blue for links, focus & UI elements */
   --secondary-light: #168da5;
   /* Interactive blue */
-  --accent: #0d9488;
+  --accent: #0f766e;
   /* Vidyaa Tech Logo Red – strategic accent for CTAs & highlights */
   --accent-light: #14b8a6;
   /* Lighter red */
@@ -2963,3 +2963,8 @@ h2 { line-height: 1.13; }
 @media (max-width: 767px) {
   .nav-dropdown { width: auto; }
 }
+
+
+/* Keep primary action labels readable against the refreshed teal accent */
+.btn-primary { background: #0f766e; border-color: #0f766e; color: #fff; }
+.btn-primary:hover { background: #115e59; border-color: #115e59; color: #fff; box-shadow: 0 10px 24px rgba(15,118,110,.22); }
