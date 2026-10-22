@@ -85,10 +85,10 @@ export default function HeroSection() {
               <span className="hero-carousel__eyebrow-dot" aria-hidden="true" />
               {slide.eyebrow}
             </div>
-            <h1 key={slide.title} className="hero-title mt-4 mb-5">
+            <h1 key={slide.title} className="hero-title mt-4 mb-5 animate-fade-up">
               {slide.title}
             </h1>
-            <p key={slide.description} className="text-base md:text-lg text-[var(--text-muted)] leading-relaxed mb-7 max-w-lg hero-carousel__description">
+            <p key={slide.description} className="text-base md:text-lg text-[var(--text-muted)] leading-relaxed mb-7 max-w-lg hero-carousel__description animate-fade-up">
               {slide.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mb-8 hero-carousel__actions">
@@ -159,6 +159,19 @@ export default function HeroSection() {
                 ))}
               </div>
               <div className="hero-carousel__arrows">
+                <button
+                  type="button"
+                  className="hero-carousel__pause"
+                  onClick={() => setPaused((value) => !value)}
+                  aria-label={paused ? "Resume automatic slide rotation" : "Pause automatic slide rotation"}
+                  aria-pressed={paused}
+                >
+                  {paused ? (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="m9 5 10 7-10 7V5Z" /></svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5v14M15 5v14" /></svg>
+                  )}
+                </button>
                 <button type="button" onClick={() => showSlide(activeSlide - 1)} aria-label="Previous solution">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="m15 18-6-6 6-6" /></svg>
                 </button>
