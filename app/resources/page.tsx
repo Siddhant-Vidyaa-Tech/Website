@@ -104,7 +104,7 @@ export default function ResourcesPage() {
         <div className="container">
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg px-4 py-3 mb-10 max-w-3xl">
             <p className="text-sm text-[var(--text-muted)]">
-              <strong className="text-[var(--text)]">Coming Soon:</strong> Resources and articles are currently in development. The examples below show the planned resource structure. Subscribe to our newsletter to be notified when new content is published.
+              <strong className="text-[var(--text)]">Coming Soon:</strong> Resources and articles are currently in development. The examples below show the planned resource structure. Contact us to be notified when new content is published.
             </p>
           </div>
 

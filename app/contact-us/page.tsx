@@ -57,13 +57,13 @@ export default function ContactPage() {
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact Us" }]} />
       </div>
 
-      <section className="pb-20" aria-label="Contact information and form">
+      <section className="pb-20 contact-page-section" aria-label="Contact information and form">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="contact-page-grid grid grid-cols-1 lg:grid-cols-3 gap-12">
 
             {/* Sidebar */}
             <aside className="lg:col-span-1 space-y-6">
-              <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
+              <div className="contact-info-card bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
                 <h2 className="text-base font-bold text-[var(--text)] mb-5">Get in Touch</h2>
                 <div className="space-y-5">
                   {contactInfo.map((info) => (
@@ -94,7 +94,7 @@ export default function ContactPage() {
               </div>
 
               {/* What happens next */}
-              <div className="bg-[var(--primary)] rounded-xl p-6 text-white">
+              <div className="contact-next-steps bg-[var(--primary)] rounded-xl p-6 text-white">
                 <h3 className="text-base font-bold mb-4">What Happens Next</h3>
                 <ol className="space-y-3 text-sm">
                   {[
@@ -115,7 +115,7 @@ export default function ContactPage() {
             </aside>
 
             {/* Form */}
-            <div className="lg:col-span-2">
+            <div className="contact-form-panel lg:col-span-2">
               <h2 className="text-xl font-bold text-[var(--text)] mb-6">Send Us a Message</h2>
               <ContactForm />
             </div>

@@ -7,38 +7,38 @@
 
 :root {
   /* --- Brand Colours (Vidyaa Tech Logo Palette) --- */
-  --primary: #1313a8;
+  --primary: #173f8a;
   /* Vidyaa Tech Logo Royal Blue – dominant brand colour */
-  --primary-dark: #0a0b6c;
+  --primary-dark: #10284f;
   /* Deep royal navy for footer, dark banners, active states */
-  --primary-light: #2424cf;
+  --primary-light: #2d63c8;
   /* Mid bright blue */
-  --secondary: #1a22b8;
+  --secondary: #176b87;
   /* Professional brand blue for links, focus & UI elements */
-  --secondary-light: #3442f2;
+  --secondary-light: #168da5;
   /* Interactive blue */
-  --accent: #c62626;
+  --accent: #0f766e;
   /* Vidyaa Tech Logo Red – strategic accent for CTAs & highlights */
-  --accent-light: #e03b3b;
+  --accent-light: #14b8a6;
   /* Lighter red */
-  --accent-soft: #fdf2f2;
+  --accent-soft: #e9fbf7;
   /* Soft red surface tint */
 
   /* --- Neutrals --- */
   --background: #ffffff;
   /* Pure white */
-  --surface: #f8fafd;
+  --surface: #f6f9fc;
   /* Clean light grey surface with modern cool undertone */
-  --surface-alt: #f0f4fa;
+  --surface-alt: #edf3f8;
   /* Slightly deeper light grey for alternating sections */
-  --border: #dce3ee;
+  --border: #d9e3ed;
   /* Crisp subtle border */
-  --border-light: #edf2f9;
+  --border-light: #eaf0f6;
 
   /* --- Text --- */
   --text: #0f172a;
   /* Deep slate near-black for WCAG AAA contrast */
-  --text-muted: #526075;
+  --text-muted: #536579;
   /* Mid slate grey (WCAG AA compliant) */
   --text-light: #8a99ad;
   /* Light slate grey */
@@ -59,9 +59,9 @@
   --container-max: 1280px;
 
   /* --- Radius --- */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
 
   /* --- Shadows --- */
   --shadow-sm: 0 1px 3px rgba(19, 19, 168, 0.06), 0 1px 2px rgba(19, 19, 168, 0.04);

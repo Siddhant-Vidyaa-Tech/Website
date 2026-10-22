@@ -21,12 +21,6 @@ export const navigation: NavItem[] = [
       { label: "E-Learning Solutions", href: "/services/e-learning-solutions", description: "Engaging digital learning experiences" },
       { label: "Editorial & Production", href: "/services/editorial-production", description: "End-to-end editorial workflows" },
       { label: "Digital Accessibility", href: "/services/digital-accessibility", description: "WCAG-compliant accessible content" },
-    ],
-  },
-  {
-    label: "Services",
-    href: "/services",
-    children: [
       { label: "Interactive Content", href: "/services/interactive-content", description: "Engaging interactive learning objects" },
       { label: "Educational Video", href: "/services/educational-video-production", description: "Professional educational video production" },
       { label: "TDX / Content Migration", href: "/services/tdx-migration", description: "Seamless content transformation" },

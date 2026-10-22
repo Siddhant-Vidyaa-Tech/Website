@@ -142,7 +142,7 @@ export default function AboutPage() {
             </div>
 
             {/* Visual: Office snapshot & expertise badge */}
-            <div className="relative rounded-2xl overflow-hidden border border-[var(--border)] shadow-md group bg-white">
+            <div className="about-feature-card relative rounded-2xl overflow-hidden border border-[var(--border)] shadow-md group bg-white">
               <div className="relative aspect-[16/10] w-full">
                 <Image
                   src="/images/office-snapshot.png"
@@ -170,7 +170,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="section-py bg-[var(--primary)]" aria-labelledby="mission-heading">
+      <section className="section-py bg-[var(--primary)] about-mission" aria-labelledby="mission-heading">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <SectionLabel light>Our Mission</SectionLabel>
@@ -196,7 +196,7 @@ export default function AboutPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((v) => (
-              <div key={v.title} className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
+              <div key={v.title} className="about-value-card bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
                 <div className="w-11 h-11 rounded-lg bg-[var(--primary)] bg-opacity-10 flex items-center justify-center text-[var(--secondary)] mb-4">
                   {v.icon}
                 </div>
