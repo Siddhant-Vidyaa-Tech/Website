@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./design-refresh.css";
 import JsonLd from "@/components/seo/JsonLd";
 import { organisationSchema, websiteSchema } from "@/lib/structured-data";
 
