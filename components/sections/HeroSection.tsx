@@ -45,7 +45,9 @@ const slides = [
 
 export default function HeroSection() {
   const [activeSlide, setActiveSlide] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [manualPaused, setManualPaused] = useState(false);
+  const [interactionPaused, setInteractionPaused] = useState(false);
+  const paused = manualPaused || interactionPaused;
   const slide = slides[activeSlide];
 
   useEffect(() => {
@@ -69,12 +71,12 @@ export default function HeroSection() {
       className="hero-section hero-carousel"
       aria-label="Featured Vidyaa Tech solutions"
       aria-roledescription="carousel"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
+      onMouseEnter={() => setInteractionPaused(true)}
+      onMouseLeave={() => setInteractionPaused(false)}
+      onFocusCapture={() => setInteractionPaused(true)}
       onBlurCapture={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-          setPaused(false);
+          setInteractionPaused(false);
         }
       }}
     >
@@ -162,9 +164,9 @@ export default function HeroSection() {
                 <button
                   type="button"
                   className="hero-carousel__pause"
-                  onClick={() => setPaused((value) => !value)}
-                  aria-label={paused ? "Resume automatic slide rotation" : "Pause automatic slide rotation"}
-                  aria-pressed={paused}
+                  onClick={() => setManualPaused((value) => !value)}
+                  aria-label={manualPaused ? "Resume automatic slide rotation" : "Pause automatic slide rotation"}
+                  aria-pressed={manualPaused}
                 >
                   {paused ? (
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="m9 5 10 7-10 7V5Z" /></svg>
