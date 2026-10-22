@@ -31,55 +31,52 @@ const caseStudies = [
 
 export default function CaseStudiesSection() {
   return (
-    <section className="section-py bg-[var(--surface)]" aria-labelledby="case-studies-heading">
+    <section
+      className="section-py bg-[var(--surface)] case-studies-section"
+      aria-labelledby="case-studies-heading"
+    >
       <div className="container">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-          <div className="max-w-xl">
+        <div className="case-studies-section__header">
+          <div className="case-studies-section__intro">
             <SectionLabel>Our Work</SectionLabel>
-            <h2 id="case-studies-heading" className="mb-2">
+            <h2 id="case-studies-heading">
               Projects that <span className="text-[var(--secondary)]">delivered impact</span>
             </h2>
           </div>
-          <Link href="/case-studies" className="btn btn-outline flex-shrink-0 self-start md:self-auto">
+
+          <Link
+            href="/case-studies"
+            className="btn btn-outline case-studies-section__all-link"
+          >
             View all case studies
           </Link>
         </div>
 
-        {/* Visual case study cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="case-studies-grid">
           {caseStudies.map((cs) => (
             <Link
               key={cs.id}
               href="/case-studies"
-              className="case-study-tile group"
+              className="case-study-tile case-study-card group"
+              aria-label={`${cs.title}. View all case studies.`}
             >
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
+              <div className="case-study-card__media">
                 <Image
                   src={cs.image}
-                  alt={cs.title}
+                  alt={`${cs.industry}: ${cs.title}`}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1023px) calc(50vw - 40px), (max-width: 1279px) calc(33vw - 32px), 390px"
+                  className="case-study-card__image"
                 />
               </div>
-              
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-[var(--text)] mb-2 group-hover:text-[var(--primary)] transition-colors">
-                  {cs.title}
-                </h3>
-                <p className="text-sm text-[var(--text-muted)] mb-4">
-                  {cs.summary}
-                </p>
-                
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2">
+
+              <div className="case-study-card__body">
+                <h3 className="case-study-card__title">{cs.title}</h3>
+                <p className="case-study-card__summary">{cs.summary}</p>
+
+                <div className="case-study-card__tags" aria-label="Project categories">
                   {cs.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[10px] font-semibold uppercase tracking-wide px-2 py-1 bg-[var(--surface)] border border-[var(--border)] rounded-full text-[var(--text-muted)]"
-                    >
+                    <span key={tag} className="case-study-card__tag">
                       {tag}
                     </span>
                   ))}
@@ -89,7 +86,7 @@ export default function CaseStudiesSection() {
           ))}
         </div>
 
-        <p className="text-xs text-center text-[var(--text-light)] mt-8">
+        <p className="case-studies-section__note">
           Client names not disclosed without permission. Contact us to discuss our work in more detail.
         </p>
       </div>
