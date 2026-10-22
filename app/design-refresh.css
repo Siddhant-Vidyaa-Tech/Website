@@ -633,45 +633,61 @@ textarea.form-input { min-height: 140px; resize: vertical; }
 
 
 /* ============================================================
-   ECOSYSTEM VISUAL — remove the source artwork's excess left
-   whitespace without changing the image or card dimensions.
-   The card clips a modest proportional zoom, anchored at the
-   right edge so the important right-side content stays in view.
+   ECOSYSTEM VISUAL — frame the existing artwork consistently,
+   cropping the source image's built-in left whitespace while
+   keeping the main content anchored to the right.
    ============================================================ */
 .ecosystem-visual {
   min-width: 0;
   overflow: hidden;
   padding: 0;
+  border-radius: 24px;
+  background: #f7fafc;
 }
 
 .ecosystem-visual .ecosystem-diagram {
+  position: relative;
   display: block;
+  flex: 0 0 auto;
   width: 100%;
   max-width: 100%;
   height: auto;
-  min-width: 0;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
+  border-radius: inherit;
+  isolation: isolate;
 }
 
-.ecosystem-visual .ecosystem-diagram img {
+.ecosystem-visual .ecosystem-diagram__image {
   display: block;
-  width: 100%;
-  max-width: none;
-  height: auto;
   object-fit: cover;
   object-position: right center;
-  transform: scale(1.18);
+  transform: scale(1.28);
   transform-origin: right center;
 }
 
 @media (max-width: 1023px) {
-  .ecosystem-visual .ecosystem-diagram img {
-    transform: scale(1.12);
+  .ecosystem-visual {
+    border-radius: 20px;
+  }
+
+  .ecosystem-visual .ecosystem-diagram__image {
+    transform: scale(1.18);
   }
 }
 
 @media (max-width: 767px) {
-  .ecosystem-visual .ecosystem-diagram img {
+  .ecosystem-visual {
+    border-radius: 18px;
+  }
+
+  .ecosystem-visual .ecosystem-diagram__image {
     transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecosystem-visual .ecosystem-diagram__image {
+    transform: none;
   }
 }
