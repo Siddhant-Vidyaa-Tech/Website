@@ -630,3 +630,48 @@ textarea.form-input { min-height: 140px; resize: vertical; }
     transform: none;
   }
 }
+
+
+/* ============================================================
+   ECOSYSTEM VISUAL — remove the source artwork's excess left
+   whitespace without changing the image or card dimensions.
+   The card clips a modest proportional zoom, anchored at the
+   right edge so the important right-side content stays in view.
+   ============================================================ */
+.ecosystem-visual {
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.ecosystem-visual .ecosystem-diagram {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.ecosystem-visual .ecosystem-diagram img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  object-fit: cover;
+  object-position: right center;
+  transform: scale(1.18);
+  transform-origin: right center;
+}
+
+@media (max-width: 1023px) {
+  .ecosystem-visual .ecosystem-diagram img {
+    transform: scale(1.12);
+  }
+}
+
+@media (max-width: 767px) {
+  .ecosystem-visual .ecosystem-diagram img {
+    transform: scale(1.08);
+  }
+}
