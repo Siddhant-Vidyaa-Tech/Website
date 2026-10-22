@@ -168,7 +168,7 @@ export default function HeroSection() {
                   aria-label={manualPaused ? "Resume automatic slide rotation" : "Pause automatic slide rotation"}
                   aria-pressed={manualPaused}
                 >
-                  {paused ? (
+                  {manualPaused ? (
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="m9 5 10 7-10 7V5Z" /></svg>
                   ) : (
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5v14M15 5v14" /></svg>
