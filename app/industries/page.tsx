@@ -34,7 +34,7 @@ export default function IndustriesPage() {
               <Link
                 key={ind.slug}
                 href={`/industries/${ind.slug}`}
-                className="group block bg-[var(--background)] border border-[var(--border)] rounded-xl overflow-hidden hover:shadow-[var(--shadow-lg)] hover:-translate-y-1 transition-all duration-300"
+                className="industry-listing-card group block bg-[var(--background)] border border-[var(--border)] rounded-xl overflow-hidden hover:shadow-[var(--shadow-lg)] hover:-translate-y-1 transition-all duration-300"
               >
                 <IndustryArtwork slug={ind.slug} />
                 <div className="p-6">
