@@ -2941,3 +2941,25 @@ h2 { line-height: 1.13; }
   .hero-carousel__image-layer { transition: none; transform: none; }
   .hero-carousel__arrows button,.hero-carousel__dot { transition: none; }
 }
+
+
+/* Service navigation is grouped in one compact mega-menu */
+@media (min-width: 1024px) {
+  .nav-dropdown {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: .15rem;
+    width: min(560px, calc(100vw - 2rem));
+    min-width: 0;
+    padding: .85rem;
+  }
+  .nav-dropdown > div:last-child { grid-column: 1 / -1; }
+  .nav-dropdown-item { min-width: 0; align-items: flex-start; padding: .7rem .75rem; }
+  .nav-dropdown-item > span { min-width: 0; }
+}
+.hero-carousel__pause { font-size: 0; }
+.hero-carousel__pause[aria-pressed="true"] { color: #0d827c; background: #eefaf7; border-color: #a9ded5; }
+@media (max-width: 767px) {
+  .nav-dropdown { width: auto; }
+}
