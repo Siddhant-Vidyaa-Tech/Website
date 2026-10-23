@@ -82,7 +82,7 @@ export default function HeroSection() {
 
   return (
     <section
-      className="hero-section hero-carousel"
+      className="hero-section hero-carousel relative overflow-hidden"
       aria-label="Featured Vidyaa Tech solutions"
       aria-roledescription="carousel"
       onMouseEnter={() => setInteractionPaused(true)}
@@ -112,7 +112,7 @@ export default function HeroSection() {
                 onClick={() => showSlide(index)}
                 className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all cursor-pointer ${
                   active
-                    ? "bg-[var(--primary-dark)] text-white shadow-sm"
+                    ? "bg-[#0a193b] text-white shadow-sm"
                     : "bg-white text-slate-600 border border-slate-200 hover:border-slate-300 hover:text-slate-900"
                 }`}
               >
@@ -127,13 +127,15 @@ export default function HeroSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <div className="lg:col-span-6 z-10">
-            <div className="min-h-[260px] flex flex-col justify-center" aria-live={paused ? "polite" : "off"} aria-atomic="true">
+          <div className="lg:col-span-6 relative z-10">
+            <div
+              className="min-h-[250px] flex flex-col justify-center"
+              aria-live={paused ? "polite" : "off"}
+              aria-atomic="true"
+            >
               <span className="section-label">{slide.eyebrow}</span>
-              <h1 className="hero-title mt-2 mb-5">
-                {slide.title}
-              </h1>
-              <p className="text-base md:text-lg text-[var(--text-muted)] leading-relaxed mb-8 max-w-xl">
+              <h1 className="hero-title mt-2 mb-5">{slide.title}</h1>
+              <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-8 max-w-xl">
                 {slide.description}
               </p>
             </div>
@@ -141,8 +143,21 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-3.5 mb-8">
               <Link href={slide.primaryHref} className="btn btn-primary btn-lg">
                 {slide.primaryLabel}
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg
+                  width="16"
+                  height="16"
+                  className="w-4 h-4 shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </Link>
               <Link href="/contact-us" className="btn btn-outline btn-lg">
@@ -153,8 +168,11 @@ export default function HeroSection() {
             {/* Key Trust Proof Strip */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-200/80">
               {heroMetrics.map((m) => (
-                <div key={m.label} className="bg-white/90 border border-slate-200/80 rounded-xl p-3">
-                  <div className="text-lg font-extrabold text-[var(--primary-dark)] leading-tight">
+                <div
+                  key={m.label}
+                  className="bg-white/95 border border-slate-200/80 rounded-xl p-3 shadow-xs"
+                >
+                  <div className="text-lg font-extrabold text-[#0a193b] leading-tight">
                     {m.value}
                   </div>
                   <div className="text-[11px] font-medium text-slate-500 mt-0.5 leading-snug">
@@ -165,42 +183,73 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="lg:col-span-6 relative min-w-0">
-            <div className="hero-carousel__visual">
-              {slides.map((item, index) => (
-                <div
-                  key={item.image}
-                  className={"hero-carousel__image-layer " + (activeSlide === index ? "is-active" : "")}
-                  aria-hidden={activeSlide !== index}
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.imageAlt}
-                    fill
-                    priority={index === 0}
-                    sizes="(max-width: 1023px) 100vw, 620px"
-                    className="hero-carousel__image hero-carousel__image--cover"
-                  />
-                </div>
-              ))}
-              <div className="hero-carousel__image-note">
-                <div className="flex items-center gap-3">
-                  <span className="w-10 h-10 rounded-xl bg-red-50 text-[var(--accent)] flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          {/* Right Column: Explicitly bounded relative container so <Image fill /> never overflows */}
+          <div className="lg:col-span-6 relative min-w-0 z-10">
+            <div
+              className="hero-carousel__visual relative w-full aspect-[4/3] min-h-[340px] rounded-3xl border border-slate-200 bg-slate-100 overflow-hidden shadow-xl"
+              style={{ position: "relative", width: "100%", aspectRatio: "4 / 3", overflow: "hidden" }}
+            >
+              {slides.map((item, index) => {
+                const isActive = activeSlide === index;
+                return (
+                  <div
+                    key={item.image}
+                    className={`hero-carousel__image-layer absolute inset-0 w-full h-full transition-opacity duration-500 ${
+                      isActive ? "opacity-100 visible z-10" : "opacity-0 invisible z-0 pointer-events-none"
+                    }`}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      opacity: isActive ? 1 : 0,
+                      visibility: isActive ? "visible" : "hidden",
+                    }}
+                    aria-hidden={!isActive}
+                  >
+                    <Image
+                      src={item.image}
+                      alt={item.imageAlt}
+                      fill
+                      priority={index === 0}
+                      sizes="(max-width: 1023px) 100vw, 620px"
+                      className="object-cover object-center"
+                    />
+                  </div>
+                );
+              })}
+
+              <div
+                className="hero-carousel__image-note absolute z-20 left-4 right-4 bottom-4 flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-white/95 backdrop-blur-md border border-white/80 shadow-lg"
+                style={{ position: "absolute", left: "1rem", right: "1rem", bottom: "1rem", zIndex: 20 }}
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="w-10 h-10 rounded-xl bg-red-50 text-[#c62626] flex items-center justify-center shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" d="m8 12 2.5 2.5L16 9" />
                       <circle cx="12" cy="12" r="9" />
                     </svg>
                   </span>
-                  <div>
-                    <strong className="block text-sm font-bold text-slate-900">{slide.badgeTitle}</strong>
-                    <small className="block text-xs text-slate-600">{slide.badgeNote}</small>
+                  <div className="min-w-0">
+                    <strong className="block text-sm font-bold text-slate-900 truncate">
+                      {slide.badgeTitle}
+                    </strong>
+                    <small className="block text-xs text-slate-600 truncate">
+                      {slide.badgeNote}
+                    </small>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 shrink-0">
                   <button
                     type="button"
                     onClick={() => setManualPaused((v) => !v)}
-                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100"
+                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100 cursor-pointer"
                     aria-label={manualPaused ? "Resume slide rotation" : "Pause slide rotation"}
                     aria-pressed={manualPaused}
                   >
@@ -209,7 +258,7 @@ export default function HeroSection() {
                   <button
                     type="button"
                     onClick={() => showSlide(activeSlide - 1)}
-                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100"
+                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100 cursor-pointer"
                     aria-label="Previous slide"
                   >
                     ←
@@ -217,7 +266,7 @@ export default function HeroSection() {
                   <button
                     type="button"
                     onClick={() => showSlide(activeSlide + 1)}
-                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100"
+                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100 cursor-pointer"
                     aria-label="Next slide"
                   >
                     →
