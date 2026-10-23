@@ -6,42 +6,58 @@ import { useEffect, useState } from "react";
 
 const slides = [
   {
-    eyebrow: "E-learning solutions",
+    id: "elearning",
+    tabLabel: "01 · E-Learning & Courseware",
+    eyebrow: "E-Learning & Digital Courseware",
     title: "Digital learning that moves education forward.",
     description:
-      "Create engaging, accessible learning experiences with interactive content, courseware, educational video and thoughtful instructional design.",
-    image: "/images/image 186.png",
-    imageAlt: "Digital learning experience designed to make educational content engaging and accessible",
-    fit: "contain",
-    primaryLabel: "Explore e-learning",
-    primaryHref: "/services/e-learning-solutions",
-    note: "Interactive content · Courseware · Video",
-  },
-  {
-    eyebrow: "IT solutions",
-    title: "Technology designed around better learning.",
-    description:
-      "Connect platforms, workflows and content operations with practical technology support built for education teams and evolving learning needs.",
-    image: "/images/it-solutions.png",
-    imageAlt: "Technology solutions supporting digital education and learning operations",
-    fit: "contain",
-    primaryLabel: "Explore IT solutions",
-    primaryHref: "/services/it-solutions",
-    note: "Platforms · Migration · QA",
-  },
-  {
-    eyebrow: "Talent & staffing solutions",
-    title: "The right expertise for every learning project.",
-    description:
-      "Extend your team with education, content, editorial, technology and production specialists who can support delivery at scale.",
-    image: "/images/1536x1040_Office_snapshot_Q1_2024 1.png",
-    imageAlt: "Professionals collaborating in a modern office environment",
+      "Create engaging, WCAG 2.2 AA accessible learning experiences with interactive HTML5 courseware, SCORM/xAPI modules, educational video, and evidence-based instructional design.",
+    image: "/images/Interactive EdTech Learning Dashboard.png",
+    imageAlt: "Interactive EdTech learning dashboard across laptop, tablet, and mobile devices",
     fit: "cover",
-    primaryLabel: "Explore talent solutions",
-    primaryHref: "/services/talent-staffing",
-    note: "Specialist talent · Flexible delivery · Team support",
+    primaryLabel: "Explore E-Learning Solutions",
+    primaryHref: "/services/e-learning-solutions",
+    badgeTitle: "Multi-Device SCORM & HTML5",
+    badgeNote: "Interactive modules · Video · WCAG 2.2 AA",
+  },
+  {
+    id: "curriculum",
+    tabLabel: "02 · Curriculum & Assessment",
+    eyebrow: "Curriculum, Content & Assessment",
+    title: "Standards-aligned content built for real classrooms.",
+    description:
+      "Partner with subject-matter educators, psychometric item writers, and editorial specialists to deliver K–12, higher-ed, and publishing programmes at volume.",
+    image: "/images/Hero Image.png",
+    imageAlt: "Educator guiding students with books and digital tablets in a modern classroom",
+    fit: "cover",
+    primaryLabel: "Explore Content & Assessment",
+    primaryHref: "/services/curriculum-design",
+    badgeTitle: "Full-Curriculum Coverage",
+    badgeNote: "Common Core · NGSS · IB · Custom Item Banks",
+  },
+  {
+    id: "technology",
+    tabLabel: "03 · Technology & Talent",
+    eyebrow: "Technology, Migration & Specialist Talent",
+    title: "Scale your learning operations with confidence.",
+    description:
+      "Modernise legacy libraries into structured XML/HTML5, integrate LMS platforms, and extend your team with vetted instructional designers, editors, and QA engineers.",
+    image: "/images/office-snapshot.png",
+    imageAlt: "Vidyaa Tech specialist team collaborating on digital learning delivery",
+    fit: "cover",
+    primaryLabel: "Explore IT & Talent Solutions",
+    primaryHref: "/services/it-solutions",
+    badgeTitle: "End-to-End Delivery Partner",
+    badgeNote: "TDX Migration · Multi-Stage QA · Specialist Staffing",
   },
 ] as const;
+
+const heroMetrics = [
+  { value: "12", label: "Specialist EdTech Services" },
+  { value: "WCAG 2.2", label: "Level AA Accessibility Built In" },
+  { value: "6-Stage", label: "Editorial & Technical QA Pipeline" },
+  { value: "< 24h", label: "Specialist Team Response" },
+];
 
 export default function HeroSection() {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -54,11 +70,9 @@ export default function HeroSection() {
     if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
-
     const timer = window.setInterval(() => {
       setActiveSlide((current) => (current + 1) % slides.length);
     }, 6500);
-
     return () => window.clearInterval(timer);
   }, [paused]);
 
@@ -80,42 +94,79 @@ export default function HeroSection() {
         }
       }}
     >
-      <div className="container py-14 md:py-20 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-9 lg:gap-12 items-center">
-          <div className="lg:col-span-5 z-10">
-            <div className="hero-carousel__copy" aria-live={paused ? "polite" : "off"} aria-atomic="true">
-            <div className="hero-carousel__eyebrow">
-              <span className="hero-carousel__eyebrow-dot" aria-hidden="true" />
-              {slide.eyebrow}
+      <div className="container py-12 md:py-16 lg:py-20">
+        {/* Interactive Pillar Switcher Bar */}
+        <div
+          className="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-slate-200/80"
+          role="tablist"
+          aria-label="Solution pillars"
+        >
+          {slides.map((item, index) => {
+            const active = activeSlide === index;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => showSlide(index)}
+                className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all cursor-pointer ${
+                  active
+                    ? "bg-[var(--primary-dark)] text-white shadow-sm"
+                    : "bg-white text-slate-600 border border-slate-200 hover:border-slate-300 hover:text-slate-900"
+                }`}
+              >
+                {item.tabLabel}
+              </button>
+            );
+          })}
+          <div className="ml-auto hidden sm:flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true" />
+            WCAG 2.2 AA &amp; Section 508 Ready
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="lg:col-span-6 z-10">
+            <div className="min-h-[260px] flex flex-col justify-center" aria-live={paused ? "polite" : "off"} aria-atomic="true">
+              <span className="section-label">{slide.eyebrow}</span>
+              <h1 className="hero-title mt-2 mb-5">
+                {slide.title}
+              </h1>
+              <p className="text-base md:text-lg text-[var(--text-muted)] leading-relaxed mb-8 max-w-xl">
+                {slide.description}
+              </p>
             </div>
-            <h1 key={slide.title} className="hero-title mt-4 mb-5 animate-fade-up">
-              {slide.title}
-            </h1>
-            <p key={slide.description} className="text-base md:text-lg text-[var(--text-muted)] leading-relaxed mb-7 max-w-lg hero-carousel__description animate-fade-up">
-              {slide.description}
-            </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 mb-8 hero-carousel__actions">
+
+            <div className="flex flex-col sm:flex-row gap-3.5 mb-8">
               <Link href={slide.primaryHref} className="btn btn-primary btn-lg">
                 {slide.primaryLabel}
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
               <Link href="/contact-us" className="btn btn-outline btn-lg">
-                Talk to our team
+                Request a Consultation
               </Link>
             </div>
-            <div className="hero-signals" aria-label="Our areas of expertise">
-              <span>Curriculum</span>
-              <span>Assessment</span>
-              <span>Digital learning</span>
-              <span>Accessibility</span>
+
+            {/* Key Trust Proof Strip */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-200/80">
+              {heroMetrics.map((m) => (
+                <div key={m.label} className="bg-white/90 border border-slate-200/80 rounded-xl p-3">
+                  <div className="text-lg font-extrabold text-[var(--primary-dark)] leading-tight">
+                    {m.value}
+                  </div>
+                  <div className="text-[11px] font-medium text-slate-500 mt-0.5 leading-snug">
+                    {m.label}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="lg:col-span-7 relative min-w-0">
-            <div className="hero-visual hero-carousel__visual relative w-full aspect-[3/2] bg-white rounded-xl overflow-hidden">
+          <div className="lg:col-span-6 relative min-w-0">
+            <div className="hero-carousel__visual">
               {slides.map((item, index) => (
                 <div
                   key={item.image}
@@ -127,64 +178,51 @@ export default function HeroSection() {
                     alt={item.imageAlt}
                     fill
                     priority={index === 0}
-                    sizes="(max-width: 1023px) 100vw, (max-width: 1350px) 56vw, 680px"
-                    className={item.fit === "contain" ? "hero-carousel__image hero-carousel__image--contain" : "hero-carousel__image hero-carousel__image--cover"}
+                    sizes="(max-width: 1023px) 100vw, 620px"
+                    className="hero-carousel__image hero-carousel__image--cover"
                   />
                 </div>
               ))}
-              <div className="hero-carousel__image-note" aria-live="off">
-                <span className="hero-carousel__note-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m8 12 2.5 2.5L16 9" />
-                  </svg>
-                </span>
-                <span>
-                  <strong>{slide.eyebrow}</strong>
-                  <small>{slide.note}</small>
-                </span>
-              </div>
-            </div>
-
-            <div className="hero-carousel__toolbar">
-              <span className="hero-carousel__count" aria-hidden="true">
-                <strong>{String(activeSlide + 1).padStart(2, "0")}</strong> / {String(slides.length).padStart(2, "0")}
-              </span>
-              <div className="hero-carousel__dots" role="group" aria-label="Choose featured solution">
-                {slides.map((item, index) => (
+              <div className="hero-carousel__image-note">
+                <div className="flex items-center gap-3">
+                  <span className="w-10 h-10 rounded-xl bg-red-50 text-[var(--accent)] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m8 12 2.5 2.5L16 9" />
+                      <circle cx="12" cy="12" r="9" />
+                    </svg>
+                  </span>
+                  <div>
+                    <strong className="block text-sm font-bold text-slate-900">{slide.badgeTitle}</strong>
+                    <small className="block text-xs text-slate-600">{slide.badgeNote}</small>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5">
                   <button
-                    key={item.eyebrow}
                     type="button"
-                    className={"hero-carousel__dot " + (activeSlide === index ? "is-active" : "")}
-                    onClick={() => showSlide(index)}
-                    aria-label={"Show " + item.eyebrow}
-                    aria-pressed={activeSlide === index}
-                  />
-                ))}
-              </div>
-              <div className="hero-carousel__arrows">
-                <button
-                  type="button"
-                  className="hero-carousel__pause"
-                  onClick={() => {
-                    setManualPaused((value) => !value);
-                    setInteractionPaused(false);
-                  }}
-                  aria-label={manualPaused ? "Resume automatic slide rotation" : "Pause automatic slide rotation"}
-                  aria-pressed={manualPaused}
-                >
-                  {manualPaused ? (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="m9 5 10 7-10 7V5Z" /></svg>
-                  ) : (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5v14M15 5v14" /></svg>
-                  )}
-                </button>
-                <button type="button" onClick={() => showSlide(activeSlide - 1)} aria-label="Previous solution">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="m15 18-6-6 6-6" /></svg>
-                </button>
-                <button type="button" onClick={() => showSlide(activeSlide + 1)} aria-label="Next solution">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="m9 18 6-6-6-6" /></svg>
-                </button>
+                    onClick={() => setManualPaused((v) => !v)}
+                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100"
+                    aria-label={manualPaused ? "Resume slide rotation" : "Pause slide rotation"}
+                    aria-pressed={manualPaused}
+                  >
+                    {manualPaused ? "▶" : "❚❚"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => showSlide(activeSlide - 1)}
+                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100"
+                    aria-label="Previous slide"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => showSlide(activeSlide + 1)}
+                    className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100"
+                    aria-label="Next slide"
+                  >
+                    →
+                  </button>
+                </div>
               </div>
             </div>
           </div>

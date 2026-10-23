@@ -2,18 +2,24 @@ import Image from "next/image";
 
 export default function EcosystemDiagram({
   className = "",
+  variant = "circle",
 }: {
   className?: string;
+  variant?: "circle" | "action";
 }) {
+  const src =
+    variant === "circle"
+      ? "/images/Vidyaa Tech Ecosystem Infographic (1) - transparent.png"
+      : "/images/EdTech Expertise in Action.png";
+
   return (
-    <div className={`ecosystem-diagram relative w-full ${className}`}>
+    <div className={`relative w-full aspect-square max-w-[520px] mx-auto ${className}`}>
       <Image
-        src="/images/EdTech Expertise in Action.png"
-        alt="EdTech Expertise in Action — Education Expertise, Content Development, Technology Solutions, and Quality Assurance"
+        src={src}
+        alt="The Vidyaa Tech Connected Ecosystem — Curriculum, Content, Assessment, E-Learning, Accessibility, Technology, and Delivery"
         fill
-        sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1023px) 90vw, (max-width: 1400px) 48vw, 650px"
-        className="ecosystem-diagram__image"
-        priority
+        sizes="(max-width: 767px) 90vw, 500px"
+        className="object-contain p-3"
       />
     </div>
   );

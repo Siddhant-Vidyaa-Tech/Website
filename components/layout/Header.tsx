@@ -6,9 +6,44 @@ import { usePathname } from "next/navigation";
 import { navigation } from "@/lib/navigation";
 import Logo from "@/components/ui/Logo";
 
+const serviceGroups = [
+  {
+    group: "Content & Editorial",
+    items: [
+      { label: "Curriculum Design", href: "/services/curriculum-design", description: "Standards-aligned frameworks & progressions" },
+      { label: "Content Development", href: "/services/content-development", description: "Subject-matter writing & instructional assets" },
+      { label: "Editorial & Production", href: "/services/editorial-production", description: "Copyediting, fact-checking & print/digital prep" },
+    ],
+  },
+  {
+    group: "Assessment & Quality",
+    items: [
+      { label: "Custom Assessment Creation", href: "/services/custom-assessment-creation", description: "Validated item banks, TEIs & scoring rubrics" },
+      { label: "Quality Assurance", href: "/services/quality-assurance", description: "Pedagogical, functional & regression testing" },
+      { label: "Digital Accessibility", href: "/services/digital-accessibility", description: "WCAG 2.2 AA, Section 508 & PDF/UA remediation" },
+    ],
+  },
+  {
+    group: "Digital Learning & Media",
+    items: [
+      { label: "E-Learning Solutions", href: "/services/e-learning-solutions", description: "SCORM/xAPI modules & responsive courseware" },
+      { label: "Interactive Content", href: "/services/interactive-content", description: "HTML5 simulations, labs & branching scenarios" },
+      { label: "Educational Video", href: "/services/educational-video-production", description: "Animated explainers, voiceover & captions" },
+    ],
+  },
+  {
+    group: "Technology & Talent",
+    items: [
+      { label: "TDX / Content Migration", href: "/services/tdx-migration", description: "Legacy to XML, DITA, HTML5 & EPUB3 pipelines" },
+      { label: "IT Solutions", href: "/services/it-solutions", description: "LMS integration, CMS & platform engineering" },
+      { label: "Talent & Staffing", href: "/services/talent-staffing", description: "Vetted SMEs, instructional designers & editors" },
+    ],
+  },
+];
+
 export default function Header() {
-  const [scrolled, setScrolled]           = useState(false);
-  const [mobileOpen, setMobileOpen]       = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -16,12 +51,11 @@ export default function Header() {
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     startTransition(() => {
       setMobileOpen(false);
@@ -29,7 +63,6 @@ export default function Header() {
     });
   }, [pathname]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -52,7 +85,6 @@ export default function Header() {
     return () => document.removeEventListener("keydown", handler);
   }, [activeDropdown, mobileOpen]);
 
-  // Keep keyboard focus inside the open mobile menu and return it to the toggle on close.
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -85,132 +117,185 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${
-        scrolled ? "header-scrolled" : "border-b border-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300 ${
+        scrolled ? "header-scrolled border-b border-slate-200/80" : "border-b border-slate-100"
       }`}
       role="banner"
     >
       <div className="container">
-        <div className="flex items-center justify-between h-16 md:h-18">
-
-          {/* Logo */}
+        <div className="flex items-center justify-between h-16 md:h-[4.5rem]">
           <Link
             href="/"
             aria-label="Vidyaa Tech – Home"
-            className="flex items-center gap-2 flex-shrink-0"
+            className="flex items-center gap-2.5 flex-shrink-0"
           >
             <Logo />
           </Link>
 
-          {/* Desktop Navigation */}
           <nav
             ref={dropdownRef}
             aria-label="Main navigation"
-            className="hidden lg:flex items-center gap-0.5"
+            className="hidden lg:flex items-center gap-1"
           >
-            {navigation.map((item) => (
-              <div key={item.label} className="relative">
-                {item.children ? (
-                  <button
-                    className={`flex items-center gap-1 px-3.5 py-2 text-sm font-medium rounded-md transition-all duration-150 ${
-                      pathname.startsWith(item.href) && item.href !== "/"
-                        ? "text-primary"
-                        : "text-gray-700 hover:text-primary"
-                    } hover:bg-surface`}
-                    onClick={() =>
-                      setActiveDropdown(activeDropdown === item.label ? null : item.label)
-                    }
-                    aria-expanded={activeDropdown === item.label}
-                    aria-haspopup="true"
-                  >
-                    {item.label}
-                    <svg
-                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                        activeDropdown === item.label ? "rotate-180" : ""
+            {navigation.map((item) => {
+              const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              const isServices = item.label === "What We Do";
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => item.children && setActiveDropdown(item.label)}
+                  onMouseLeave={() => item.children && setActiveDropdown(null)}
+                >
+                  {item.children ? (
+                    <button
+                      type="button"
+                      className={`flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full transition-all duration-150 ${
+                        isActive
+                          ? "text-[var(--primary)] bg-blue-50/80"
+                          : "text-slate-700 hover:text-[var(--primary)] hover:bg-slate-100/80"
                       }`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
+                      onClick={() =>
+                        setActiveDropdown(activeDropdown === item.label ? null : item.label)
+                      }
+                      aria-expanded={activeDropdown === item.label}
+                      aria-haspopup="true"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className={`px-3.5 py-2 text-sm font-medium rounded-md transition-all duration-150 block ${
-                      pathname === item.href
-                        ? "text-primary"
-                        : "text-gray-700 hover:text-primary hover:bg-surface"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                )}
+                      {item.label}
+                      <svg
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          activeDropdown === item.label ? "rotate-180 text-[var(--accent)]" : "text-slate-400"
+                        }`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-150 block ${
+                        isActive
+                          ? "text-[var(--primary)] bg-blue-50/80"
+                          : "text-slate-700 hover:text-[var(--primary)] hover:bg-slate-100/80"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
 
-                {/* Dropdown */}
-                {item.children && activeDropdown === item.label && (
-                  <div className="nav-dropdown" role="menu">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className="nav-dropdown-item"
-                        role="menuitem"
-                        onClick={() => setActiveDropdown(null)}
-                      >
-                        <span>
-                          <span className="block font-semibold text-sm text-[var(--text)]">{child.label}</span>
-                          {child.description && (
-                            <span className="block text-xs text-[var(--text-muted)] mt-0.5">{child.description}</span>
-                          )}
+                  {item.children && activeDropdown === item.label && (
+                    <div
+                      className={`nav-dropdown ${isServices ? "" : "nav-dropdown--compact"}`}
+                      role="menu"
+                    >
+                      {isServices ? (
+                        <div className="grid grid-cols-2 gap-4 p-2">
+                          {serviceGroups.map((grp) => (
+                            <div key={grp.group} className="space-y-1">
+                              <p className="px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-[var(--accent)]">
+                                {grp.group}
+                              </p>
+                              {grp.items.map((child) => (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className="nav-dropdown-item"
+                                  role="menuitem"
+                                  onClick={() => setActiveDropdown(null)}
+                                >
+                                  <span>
+                                    <span className="block font-semibold text-sm text-slate-900">
+                                      {child.label}
+                                    </span>
+                                    <span className="block text-xs text-slate-500 mt-0.5 font-normal">
+                                      {child.description}
+                                    </span>
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="space-y-1 p-1">
+                          {item.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className="nav-dropdown-item"
+                              role="menuitem"
+                              onClick={() => setActiveDropdown(null)}
+                            >
+                              <span>
+                                <span className="block font-semibold text-sm text-slate-900">
+                                  {child.label}
+                                </span>
+                                {child.description && (
+                                  <span className="block text-xs text-slate-500 mt-0.5 font-normal">
+                                    {child.description}
+                                  </span>
+                                )}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-2 pt-2.5 px-3 border-t border-slate-100 flex items-center justify-between bg-slate-50/70 -mx-4 -mb-4 p-3 rounded-b-[19px]">
+                        <span className="text-xs text-slate-500 font-medium">
+                          WCAG 2.2 AA compliant delivery at scale
                         </span>
-                      </Link>
-                    ))}
-                    <div className="mt-2 pt-2 border-t border-[var(--border)]">
-                      <Link
-                        href={item.href}
-                        className="nav-dropdown-item text-secondary font-semibold text-sm"
-                        onClick={() => setActiveDropdown(null)}
-                      >
-                        View all →
-                      </Link>
+                        <Link
+                          href={item.href}
+                          className="text-xs font-bold text-[var(--primary)] hover:text-[var(--accent)] transition-colors"
+                          onClick={() => setActiveDropdown(null)}
+                        >
+                          Explore all {item.label.toLowerCase()} →
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
-          {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
+            <Link
+              href="/case-studies"
+              className="text-sm font-semibold text-slate-600 hover:text-[var(--primary)] px-3 py-2 transition-colors"
+            >
+              Case Studies
+            </Link>
             <Link href="/contact-us" className="btn btn-primary btn-sm">
               Let&apos;s Talk
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
           <button
             ref={mobileToggleRef}
-            className="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded-md hover:bg-surface transition-colors"
+            className="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded-lg hover:bg-slate-100 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
             <span
-              className={`block w-5 h-0.5 bg-[var(--text)] transition-all duration-300 ${
+              className={`block w-5 h-0.5 bg-slate-900 transition-all duration-300 ${
                 mobileOpen ? "rotate-45 translate-y-2" : ""
               }`}
             />
             <span
-              className={`block w-5 h-0.5 bg-[var(--text)] transition-all duration-200 ${
+              className={`block w-5 h-0.5 bg-slate-900 transition-all duration-200 ${
                 mobileOpen ? "opacity-0" : ""
               }`}
             />
             <span
-              className={`block w-5 h-0.5 bg-[var(--text)] transition-all duration-300 ${
+              className={`block w-5 h-0.5 bg-slate-900 transition-all duration-300 ${
                 mobileOpen ? "-rotate-45 -translate-y-2" : ""
               }`}
             />
@@ -218,7 +303,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         ref={mobileMenuRef}
         id="mobile-menu"
@@ -235,7 +319,7 @@ export default function Header() {
               {item.children ? (
                 <div>
                   <button
-                    className="flex items-center justify-between w-full px-4 py-3 text-base font-semibold text-[var(--text)] hover:bg-surface rounded-md"
+                    className="flex items-center justify-between w-full px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl"
                     onClick={() =>
                       setActiveDropdown(activeDropdown === item.label ? null : item.label)
                     }
@@ -244,7 +328,7 @@ export default function Header() {
                     {item.label}
                     <svg
                       className={`w-4 h-4 transition-transform duration-200 ${
-                        activeDropdown === item.label ? "rotate-180" : ""
+                        activeDropdown === item.label ? "rotate-180 text-[var(--accent)]" : ""
                       }`}
                       fill="none"
                       viewBox="0 0 24 24"
@@ -255,12 +339,12 @@ export default function Header() {
                     </svg>
                   </button>
                   {activeDropdown === item.label && (
-                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-[var(--border)] pl-4">
+                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-slate-200 pl-4">
                       {item.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block py-2.5 px-2 text-sm font-medium text-[var(--text-muted)] hover:text-primary transition-colors"
+                          className="block py-2 px-2 text-sm font-medium text-slate-600 hover:text-[var(--primary)] transition-colors"
                           onClick={() => setMobileOpen(false)}
                         >
                           {child.label}
@@ -268,7 +352,7 @@ export default function Header() {
                       ))}
                       <Link
                         href={item.href}
-                        className="block py-2.5 px-2 text-sm font-semibold text-secondary"
+                        className="block py-2 px-2 text-sm font-bold text-[var(--accent)]"
                         onClick={() => setMobileOpen(false)}
                       >
                         View all →
@@ -279,7 +363,7 @@ export default function Header() {
               ) : (
                 <Link
                   href={item.href}
-                  className="block px-4 py-3 text-base font-semibold text-[var(--text)] hover:bg-surface rounded-md"
+                  className="block px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl"
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
@@ -287,14 +371,20 @@ export default function Header() {
               )}
             </div>
           ))}
-
-          <div className="pt-6 border-t border-[var(--border)] mt-4">
+          <Link
+            href="/case-studies"
+            className="block px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl"
+            onClick={() => setMobileOpen(false)}
+          >
+            Case Studies
+          </Link>
+          <div className="pt-6 border-t border-slate-200 mt-4">
             <Link
               href="/contact-us"
               className="btn btn-primary w-full text-center"
               onClick={() => setMobileOpen(false)}
             >
-              Let&apos;s Talk
+              Let&apos;s Talk →
             </Link>
           </div>
         </nav>

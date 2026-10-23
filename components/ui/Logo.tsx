@@ -6,12 +6,16 @@ interface LogoProps {
 }
 
 export default function Logo({ variant = "dark", size = "md" }: LogoProps) {
-  const heights = { sm: 38, md: 46, lg: 54 };
+  const heights = { sm: 34, md: 40, lg: 48 };
   const height = heights[size];
 
   return (
     <span
-      className={`inline-flex items-center ${variant === "light" ? "rounded bg-white px-2 py-1" : ""}`}
+      className={`inline-flex items-center transition-transform duration-200 ${
+        variant === "light"
+          ? "rounded-xl bg-white px-3.5 py-2 shadow-sm ring-1 ring-white/20"
+          : ""
+      }`}
     >
       <Image
         src="/images/vidyaa-logo.png"
