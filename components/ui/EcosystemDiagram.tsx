@@ -9,7 +9,7 @@ export default function EcosystemDiagram({
 }) {
   const src =
     variant === "circle"
-      ? "/images/Vidyaa Tech Ecosystem Infographic (1) - transparent.png"
+      ? "/images/Ecosystem Infographic.png"
       : "/images/EdTech Expertise in Action.png";
 
   return (
