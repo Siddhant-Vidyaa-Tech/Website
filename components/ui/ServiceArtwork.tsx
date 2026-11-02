@@ -8,7 +8,7 @@ const artwork = {
   "editorial-production": { eyebrow: "EDITORIAL WORKFLOW", title: "Copyediting, Proofing & Rights", chips: ["Copyedit", "Design", "Print/Digital"], image: "/images/service-editorial.png" },
   "digital-accessibility": { eyebrow: "ACCESSIBILITY CHECK", title: "WCAG 2.2 AA & PDF/UA Compliance", chips: ["Alt Text", "Keyboard", "Screen Reader"], image: "/images/service-accessibility.png" },
   "interactive-content": { eyebrow: "INTERACTIVE LESSON", title: "Simulations, Labs & Gamified Flows", chips: ["Explore", "Simulate", "Reflect"], image: "/images/service-interactive.png" },
-  "educational-video-production": { eyebrow: "VIDEO PRODUCTION", title: "Storyboard to Broadcast Animation", chips: ["Script", "Animate", "Captions"], image: "/images/service-video.png" },
+  "educational-video-production": { eyebrow: "VIDEO PRODUCTION", title: "Storyboard to Broadcast Animation", chips: ["Script", "Animate", "Captions"], image: "/images/Inclusive Digital.png" },
   "tdx-migration": { eyebrow: "CONTENT TRANSFORMATION", title: "Legacy Print/PDF to XML, DITA & HTML5", chips: ["Source", "XML/HTML5", "Validate"], image: "/images/service-migration.png" },
   "quality-assurance": { eyebrow: "QUALITY REVIEW", title: "Pedagogical, Functional & Device QA", chips: ["Accuracy", "Cross-Device", "WCAG QA"], image: "/images/service-artwork__screen.png" },
   "it-solutions": { eyebrow: "LEARNING TECHNOLOGY", title: "LMS Integration & Platform Engineering", chips: ["LMS/CMS", "APIs", "Cloud Ops"], image: "/images/Digital Learning & Courseware Development.png" },
