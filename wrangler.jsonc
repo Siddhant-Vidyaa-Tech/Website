@@ -1,9 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "vidyaa-tech",
+  "name": "website",
   "compatibility_date": "2026-11-02",
   "compatibility_flags": [
+    "nodejs_compat",
     "global_fetch_strictly_public"
   ],
   "assets": {
@@ -13,7 +14,7 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "vidyaa-tech"
+      "service": "website"
     }
   ],
   "images": {
