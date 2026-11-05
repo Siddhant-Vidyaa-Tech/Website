@@ -9,7 +9,7 @@ const caseStudies = [
     industry: "Educational Publishing",
     title: "Large-Scale Content Migration",
     summary: "Migrating thousands of legacy content assets into modern XML workflow",
-    tags: ["Content Migration", "TDX", "Editorial"],
+    tags: ["Content Migration", "Editorial"],
   },
   {
     id: "k12-assessment",

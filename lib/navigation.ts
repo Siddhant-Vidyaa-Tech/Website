@@ -23,7 +23,7 @@ export const navigation: NavItem[] = [
       { label: "Digital Accessibility", href: "/services/digital-accessibility", description: "WCAG-compliant accessible content" },
       { label: "Interactive Content", href: "/services/interactive-content", description: "Engaging interactive learning objects" },
       { label: "Educational Video", href: "/services/educational-video-production", description: "Professional educational video production" },
-      { label: "TDX / Content Migration", href: "/services/tdx-migration", description: "Seamless content transformation" },
+      { label: "Content Migration", href: "/services/tdx-migration", description: "Seamless content transformation" },
       { label: "Quality Assurance", href: "/services/quality-assurance", description: "Rigorous QA and testing processes" },
       { label: "IT Solutions", href: "/services/it-solutions", description: "Technology infrastructure and support" },
       { label: "Talent & Staffing", href: "/services/talent-staffing", description: "Specialist education talent" },

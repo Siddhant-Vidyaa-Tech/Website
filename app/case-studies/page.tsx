@@ -24,7 +24,7 @@ const caseStudies = [
     approach: "Vidyaa Tech designed a phased migration pipeline combining automated structural conversion with expert editorial review. A dedicated QA process verified content fidelity at each stage, ensuring no accuracy or formatting issues carried over.",
     solution: "A hybrid automated-and-manual migration process delivering assets in batches, with real-time progress reporting and clear handover documentation.",
     outcome: "Content successfully transformed and verified on schedule, enabling the publisher to meet their digital platform launch date with confidence in content accuracy.",
-    tags: ["Content Migration", "TDX", "Editorial Production", "QA"],
+    tags: ["Content Migration", "Editorial Production", "QA"],
     gradient: "from-[#0a0b6c] to-[#1313a8]",
   },
   {

@@ -26,7 +26,7 @@ const services = [
   "Digital Accessibility",
   "Interactive Content",
   "Educational Video Production",
-  "TDX / Content Migration",
+  "Content Migration",
   "Quality Assurance & Testing",
   "IT Solutions",
   "Talent & Staffing",

@@ -266,9 +266,9 @@ export const servicesData: ServiceData[] = [
   },
   {
     slug: "tdx-migration",
-    shortTitle: "TDX / Migration",
-    title: "TDX / Content Migration",
-    metaTitle: "TDX & Content Migration Services | Vidyaa Tech",
+    shortTitle: "Content Migration",
+    title: "Content Migration",
+    metaTitle: "Content Migration Services | Vidyaa Tech",
     metaDescription:
       "Seamless content transformation and migration for educational publishers. Vidyaa Tech converts legacy content into XML, HTML5, DITA and platform-specific formats with accuracy and speed.",
     heroHeadline: "Migrate Content Without Losing Quality",

@@ -40,8 +40,8 @@ const capabilities = [
     image: "/images/Digital Learning & Courseware Development.png",
     imageAlt: "Digital learning and courseware technology",
     summary:
-      "WCAG 2.2 AA remediation, XML/HTML5 TDX migration, LMS engineering, and vetted specialist staffing.",
-    services: ["WCAG 2.2 AA", "TDX Migration", "Specialist Staffing"],
+      "WCAG 2.2 AA remediation, XML/HTML5 content migration, LMS engineering, and vetted specialist staffing.",
+    services: ["WCAG 2.2 AA", "Content Migration", "Specialist Staffing"],
   },
 ];
 

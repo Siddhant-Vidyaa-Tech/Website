@@ -4,10 +4,29 @@ import { servicesData } from "@/lib/services-data";
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/ui/PageHero";
 import ServiceArtwork from "@/components/ui/ServiceArtwork";
+import { DeliverableIcon, type DeliverableIconName } from "@/components/ui/ServiceIcon";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import CtaSection from "@/components/sections/CtaSection";
 import JsonLd from "@/components/seo/JsonLd";
 import { serviceSchema, faqSchema, breadcrumbSchema } from "@/lib/structured-data";
+
+const curriculumDeliverableIcons: Record<string, DeliverableIconName> = {
+  "Curriculum Frameworks": "curriculum",
+  "Scope & Sequence Documents": "sequence",
+  "Learning Progressions": "progression",
+  "Unit & Lesson Plans": "lesson",
+  "Standards Mapping": "mapping",
+  "Cross-Curricular Integration": "integration",
+};
+
+const fallbackDeliverableIcons: DeliverableIconName[] = [
+  "curriculum",
+  "sequence",
+  "progression",
+  "lesson",
+  "mapping",
+  "integration",
+];
 
 interface Props {
   service: ServiceData;
@@ -34,7 +53,7 @@ export default function ServicePageTemplate({ service }: Props) {
         label={service.category}
         headline={service.heroHeadline}
         subtitle={service.heroSubtitle}
-        visual={<ServiceArtwork slug={service.slug} />}
+        visual={<ServiceArtwork slug={service.slug} showHeader={false} className="service-artwork--hero" />}
       />
 
       <div className="container py-10">
@@ -88,7 +107,7 @@ export default function ServicePageTemplate({ service }: Props) {
               </div>
 
               {/* CTA card */}
-              <div className="bg-[var(--primary)] rounded-xl p-6 text-white">
+              <div className="service-project-cta bg-[var(--primary)] rounded-xl p-6 text-white">
                 <h3 className="text-base font-bold mb-2">Discuss Your Project</h3>
                 <p className="text-white/70 text-sm mb-5 leading-relaxed">
                   Tell us about your {service.shortTitle.toLowerCase()} requirements and we&apos;ll help you plan the right solution.
@@ -103,29 +122,31 @@ export default function ServicePageTemplate({ service }: Props) {
       </section>
 
       {/* What We Deliver */}
-      <section className="section-py bg-[var(--surface)]" aria-labelledby="deliver-heading">
+      <section className="section-py service-deliver-section" aria-labelledby="deliver-heading">
         <div className="container">
-          <h2 id="deliver-heading" className="mb-10">
-            What We Deliver
-          </h2>
+          <div className="service-deliver-heading-wrap">
+            <h2 id="deliver-heading" className="service-deliver-heading">
+              What We Deliver
+            </h2>
+            <span className="service-deliver-underline" aria-hidden="true">
+              <span />
+              <span />
+            </span>
+          </div>
           <div className="service-deliver-grid">
-            {service.whatWeDeliver.map((item) => (
-              <div
+            {service.whatWeDeliver.map((item, index) => (
+              <article
                 key={item.title}
                 className="service-deliver-item"
               >
-                <div className="w-9 h-9 rounded-lg bg-[var(--primary)] bg-opacity-10 flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5 text-[var(--secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M5 13l4 4L19 7" />
-                  </svg>
+                <div className="service-deliver-icon" aria-hidden="true">
+                  <DeliverableIcon
+                    name={curriculumDeliverableIcons[item.title] ?? fallbackDeliverableIcons[index % fallbackDeliverableIcons.length]}
+                  />
                 </div>
-                <h3 className="text-base font-semibold text-[var(--text)] mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-[var(--text-muted)] leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
             ))}
           </div>
         </div>

@@ -31,7 +31,7 @@ const resources = [
     image: "/images/service-migration.png",
     summary:
       "Key considerations for educational publishers undertaking XML, DITA or HTML5 content migration projects—from scoping and planning through to QA and delivery.",
-    topic: "TDX / Migration",
+    topic: "Content Migration",
     href: "#",
     placeholder: true,
   },
@@ -79,7 +79,7 @@ const resources = [
 
 const topicColors: Record<string, string> = {
   "Digital Accessibility": "bg-emerald-50 text-emerald-700",
-  "TDX / Migration":       "bg-purple-50 text-purple-700",
+  "Content Migration":    "bg-purple-50 text-purple-700",
   Assessment:              "bg-blue-50 text-blue-700",
   "E-Learning":            "bg-orange-50 text-orange-700",
   Curriculum:              "bg-teal-50 text-teal-700",

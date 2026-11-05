@@ -97,3 +97,75 @@ export default function ServiceIcon({ name, className = "w-6 h-6" }: ServiceIcon
 }
 
 export { icons };
+
+export type DeliverableIconName =
+  | "curriculum"
+  | "sequence"
+  | "progression"
+  | "lesson"
+  | "mapping"
+  | "integration";
+
+const deliverableIcons: Record<
+  DeliverableIconName,
+  React.FC<React.SVGProps<SVGSVGElement>>
+> = {
+  curriculum: (props) => (
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M5 7.5c4-2.2 8-.8 11 1.2v16c-3-2-7-3.4-11-1.2zM27 7.5c-4-2.2-8-.8-11 1.2v16c3-2 7-3.4 11-1.2z" />
+      <path d="M8 11c2-.7 4-.4 5.8.4M8 15c2-.7 4-.4 5.8.4M24 11c-2-.7-4-.4-5.8.4M24 15c-2-.7-4-.4-5.8.4" />
+      <path d="M16 8.7v15.8" stroke="#c62626" />
+      <path d="M8 20c2-.5 4-.2 5.8.6M24 20c-2-.5-4-.2-5.8.6" stroke="#c62626" />
+    </svg>
+  ),
+  sequence: (props) => (
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <rect x="7" y="5.5" width="19" height="23" rx="3" />
+      <path d="M12 4h9a2 2 0 012 2v2H10V6a2 2 0 012-2z" />
+      <path d="M15 14h7M15 20h7M15 25h7" />
+      <path d="m10 14 1.3 1.3 2.2-2.5M10 20l1.3 1.3 2.2-2.5M10 25l1.3 1.3 2.2-2.5" stroke="#c62626" />
+    </svg>
+  ),
+  progression: (props) => (
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M5 27h23M7 27v-7h5v7M15 27V14h5v13M23 27V8h5v19" />
+      <path d="m6 15 8-5 6 1 8-7M22 4h6v6" stroke="#c62626" />
+    </svg>
+  ),
+  lesson: (props) => (
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <rect x="4.5" y="5" width="23" height="20" rx="2.5" />
+      <path d="M5 10h22M9 15h9M9 19h7" />
+      <path d="m17 22 5-3 5 3-5 3zM22 25v3" stroke="#c62626" />
+      <circle cx="8" cy="7.5" r=".6" fill="#c62626" stroke="#c62626" />
+      <circle cx="11" cy="7.5" r=".6" fill="#c62626" stroke="#c62626" />
+    </svg>
+  ),
+  mapping: (props) => (
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="m16 4 12 6-12 6L4 10zM4 16l12 6 12-6M4 22l12 6 12-6" />
+      <path d="m4 16 12 6 12-6" stroke="#c62626" />
+    </svg>
+  ),
+  integration: (props) => (
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <circle cx="16" cy="16" r="4" />
+      <circle cx="16" cy="5" r="2.5" stroke="#c62626" />
+      <circle cx="6" cy="23" r="2.5" stroke="#c62626" />
+      <circle cx="26" cy="23" r="2.5" stroke="#c62626" />
+      <path d="m16 8 0 4M8.2 21.5l4.4-3M23.8 21.5l-4.4-3" />
+      <path d="m12.5 15.5 3.5-2 3.5 2v3l-3.5 2-3.5-2z" stroke="#c62626" />
+    </svg>
+  ),
+};
+
+export function DeliverableIcon({
+  name,
+  className = "",
+}: {
+  name: DeliverableIconName;
+  className?: string;
+}) {
+  const Icon = deliverableIcons[name];
+  return <Icon className={className} aria-hidden="true" />;
+}

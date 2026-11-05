@@ -34,7 +34,7 @@ const serviceGroups = [
   {
     group: "Technology & Talent",
     items: [
-      { label: "TDX / Content Migration", href: "/services/tdx-migration", description: "Legacy to XML, DITA, HTML5 & EPUB3 pipelines" },
+      { label: "Content Migration", href: "/services/tdx-migration", description: "Legacy to XML, DITA, HTML5 & EPUB3 pipelines" },
       { label: "IT Solutions", href: "/services/it-solutions", description: "LMS integration, CMS & platform engineering" },
       { label: "Talent & Staffing", href: "/services/talent-staffing", description: "Vetted SMEs, instructional designers & editors" },
     ],
@@ -117,13 +117,13 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300 ${
+      className={`site-header fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300 ${
         scrolled ? "header-scrolled border-b border-slate-200/80" : "border-b border-slate-100"
       }`}
       role="banner"
     >
       <div className="container">
-        <div className="flex items-center justify-between h-16 md:h-[4.5rem]">
+        <div className="site-header__bar relative flex items-center justify-between h-16 md:h-[4.5rem]">
           <Link
             href="/"
             aria-label="Vidyaa Tech – Home"
@@ -143,21 +143,17 @@ export default function Header() {
               return (
                 <div
                   key={item.label}
-                  className="relative"
+                  className={isServices ? "nav-item nav-item--mega" : "nav-item relative"}
                   onMouseEnter={() => item.children && setActiveDropdown(item.label)}
                   onMouseLeave={() => item.children && setActiveDropdown(null)}
                 >
                   {item.children ? (
                     <button
                       type="button"
-                      className={`flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full transition-all duration-150 ${
-                        isActive
-                          ? "text-[var(--primary)] bg-blue-50/80"
-                          : "text-slate-700 hover:text-[var(--primary)] hover:bg-slate-100/80"
+                      className={`nav-link flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full transition-all duration-150 ${
+                        isActive ? "nav-link--active" : ""
                       }`}
-                      onClick={() =>
-                        setActiveDropdown(activeDropdown === item.label ? null : item.label)
-                      }
+                      onClick={() => setActiveDropdown(item.label)}
                       aria-expanded={activeDropdown === item.label}
                       aria-haspopup="true"
                     >
@@ -177,10 +173,8 @@ export default function Header() {
                   ) : (
                     <Link
                       href={item.href}
-                      className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-150 block ${
-                        isActive
-                          ? "text-[var(--primary)] bg-blue-50/80"
-                          : "text-slate-700 hover:text-[var(--primary)] hover:bg-slate-100/80"
+                      className={`nav-link px-4 py-2 text-sm font-semibold rounded-full transition-all duration-150 block ${
+                        isActive ? "nav-link--active" : ""
                       }`}
                     >
                       {item.label}
@@ -189,7 +183,7 @@ export default function Header() {
 
                   {item.children && activeDropdown === item.label && (
                     <div
-                      className={`nav-dropdown ${isServices ? "" : "nav-dropdown--compact"}`}
+                      className={`nav-dropdown ${isServices ? "nav-dropdown--services" : "nav-dropdown--compact"}`}
                       role="menu"
                     >
                       {isServices ? (
@@ -306,7 +300,7 @@ export default function Header() {
       <div
         ref={mobileMenuRef}
         id="mobile-menu"
-        className={`lg:hidden fixed inset-0 top-16 bg-white z-40 overflow-y-auto transition-all duration-300 ${
+        className={`mobile-menu-panel lg:hidden fixed left-0 right-0 top-16 bg-white z-40 overflow-y-auto transition-all duration-300 ${
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden={!mobileOpen}

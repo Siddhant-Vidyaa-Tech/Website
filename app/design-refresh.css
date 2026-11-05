@@ -62,6 +62,7 @@ h2 { line-height: 1.13; }
 .cta-layout { border-radius: 24px; }
 .cta-layout h2,.cta-layout p { color: #fff; }
 .cta-layout p { color: rgba(255,255,255,.82); }
+.cta-section .btn-secondary { color: var(--primary-dark); }
 .cta-eyebrow { color: #8de5d8; }
 .cta-secondary { border-radius: 999px; border-color: rgba(255,255,255,.45); }
 .site-footer { background: #0d203d; }
@@ -75,7 +76,7 @@ h2 { line-height: 1.13; }
 .footer-copy { color: #b5c3d4; }
 .footer-legal-link { color: #d4deea; }
 .nav-dropdown { border: 1px solid #e0e8f0; border-radius: 14px; box-shadow: 0 18px 44px rgba(16,40,79,.13); }
-.nav-dropdown-item:hover { background: #f0faf8; color: #145f70; }
+.nav-dropdown-item:hover { background: #f8fafc; color: var(--primary); }
 .capabilities-section { background: linear-gradient(180deg,#f7fafc 0%,#fff 76%); }
 .capabilities-section__card { border-radius: 18px; box-shadow: 0 5px 22px rgba(16,40,79,.045); }
 .capabilities-section__card:hover { border-color: rgba(13,148,136,.4); box-shadow: 0 18px 38px rgba(16,40,79,.1); }
@@ -225,20 +226,18 @@ h2 { line-height: 1.13; }
 }
 
 
-/* Service navigation is grouped in one compact mega-menu */
+/* Dropdowns are a single stack. Only the service groups use two columns. */
 @media (min-width: 1024px) {
   .nav-dropdown {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
-    gap: .15rem;
-    width: min(560px, calc(100vw - 2rem));
+    display: flex;
+    flex-direction: column;
+    width: min(22.5rem, calc(100vw - 2rem));
     min-width: 0;
-    padding: .85rem;
+    padding: .45rem;
   }
-  .nav-dropdown > div:last-child { grid-column: 1 / -1; }
-  .nav-dropdown-item { min-width: 0; align-items: flex-start; padding: .7rem .75rem; }
-  .nav-dropdown-item > span { min-width: 0; }
+  .nav-dropdown--services {
+    width: min(44rem, calc(100vw - 2rem));
+  }
 }
 .hero-carousel__pause { font-size: 0; }
 .hero-carousel__pause[aria-pressed="true"] { color: #0d827c; background: #eefaf7; border-color: #a9ded5; }
@@ -544,6 +543,10 @@ textarea.form-input { min-height: 140px; resize: vertical; }
 .industries-section .industry-tile__label {
   min-width: 0;
   overflow-wrap: anywhere;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 .industries-section .industry-tile__arrow {
   display: grid;
@@ -1022,4 +1025,297 @@ textarea.form-input { min-height: 140px; resize: vertical; }
   height: 15px !important;
   max-width: 15px !important;
   max-height: 15px !important;
+}
+
+/* ============================================================
+   HEADER NAVIGATION
+   Scoped to the site header so other sections are unchanged.
+   ============================================================ */
+.site-header .nav-link {
+  color: #334155;
+}
+.site-header .nav-link:hover,
+.site-header .nav-link--active {
+  color: var(--primary);
+  background: #eef2ff;
+}
+.site-header .nav-item--mega {
+  position: relative;
+}
+.site-header .nav-dropdown {
+  display: flex;
+  flex-direction: column;
+  top: 100%;
+  left: 0;
+  transform: none;
+  width: min(22.5rem, calc(100vw - 1.5rem));
+  max-height: min(70vh, 34rem);
+  padding: 0.4rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(10, 25, 59, 0.12);
+}
+.site-header .nav-dropdown--services {
+  width: min(44rem, calc(100vw - 2rem));
+}
+.site-header .nav-dropdown__body {
+  overflow: auto;
+  min-height: 0;
+  padding: 0.2rem;
+}
+.site-header .nav-dropdown__groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 0.75rem;
+  row-gap: 0.15rem;
+}
+.site-header .nav-dropdown__label {
+  margin: 0;
+  padding: 0.45rem 0.65rem 0.15rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.site-header .nav-dropdown-item {
+  align-items: flex-start;
+  padding: 0.45rem 0.65rem;
+  border-radius: 10px;
+  line-height: 1.35;
+}
+.site-header .nav-dropdown-item:hover {
+  background: #f8fafc;
+  color: var(--primary);
+}
+.site-header .nav-dropdown__title {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--primary-dark);
+}
+.site-header .nav-dropdown__desc {
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+.site-header .nav-dropdown__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.15rem;
+  padding: 0.7rem 0.7rem 0.45rem;
+  border-top: 1px solid var(--border);
+}
+.site-header .nav-dropdown__note {
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+.site-header .nav-dropdown__all {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.site-header .nav-dropdown__all:hover {
+  color: var(--primary);
+}
+.site-header .mobile-nav {
+  top: 4rem;
+}
+@media (min-width: 768px) {
+  .site-header .mobile-nav {
+    top: 4.5rem;
+  }
+}
+@media (max-width: 1023px) {
+  .site-header .nav-dropdown__groups {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The header blur creates a containing block for fixed descendants. Give the
+   mobile panel an explicit viewport-based height so it fills below the bar. */
+.site-header .mobile-menu-panel {
+  top: 4rem;
+  bottom: auto;
+  height: calc(100dvh - 4rem);
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .site-header .mobile-menu-panel {
+    top: 4.5rem;
+    height: calc(100dvh - 4.5rem);
+  }
+}
+
+/* Service detail: What We Deliver */
+.service-deliver-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(145deg, #f2f8fd 0%, #f8fbfe 54%, #edf6fc 100%);
+}
+.service-deliver-section::before,
+.service-deliver-section::after {
+  position: absolute;
+  z-index: -1;
+  width: clamp(18rem, 34vw, 34rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+.service-deliver-section::before {
+  top: -19rem;
+  right: -11rem;
+  background: radial-gradient(circle, rgba(178, 222, 244, .34), rgba(218, 239, 250, .14) 60%, transparent 72%);
+}
+.service-deliver-section::after {
+  bottom: -25rem;
+  left: -13rem;
+  background: radial-gradient(circle, rgba(189, 228, 247, .35), rgba(222, 241, 250, .15) 60%, transparent 73%);
+}
+.service-deliver-section .container {
+  position: relative;
+  z-index: 1;
+}
+.service-deliver-heading-wrap {
+  margin-bottom: 2rem;
+}
+.service-deliver-heading {
+  margin: 0;
+  color: #10284f;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.035em;
+}
+.service-deliver-underline {
+  display: flex;
+  width: 7rem;
+  height: 6px;
+  gap: 3px;
+  margin-top: .9rem;
+  overflow: hidden;
+  border-radius: 999px;
+}
+.service-deliver-underline span:first-child {
+  flex: 1;
+  background: #10284f;
+}
+.service-deliver-underline span:last-child {
+  width: 1.7rem;
+  background: #c62626;
+}
+.service-deliver-section .service-deliver-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 1.25rem;
+}
+.service-deliver-section .service-deliver-item {
+  position: relative;
+  min-width: 0;
+  min-height: 100%;
+  padding: 1.35rem 1.4rem 1.45rem 1.55rem;
+  overflow: hidden;
+  border: 1px solid #dce8f3;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 25px rgba(23, 63, 138, .065);
+}
+.service-deliver-section .service-deliver-item::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 5px;
+  height: 3rem;
+  border-radius: 0 5px 5px 0;
+  background: #c62626;
+  content: "";
+  transform: translateY(-50%);
+}
+
+/* Keep the project CTA readable against its navy background despite global text rules. */
+.service-project-cta h3 {
+  color: #fff;
+}
+.service-project-cta p {
+  color: rgba(255, 255, 255, .86);
+}
+
+/* Detail page artwork is a clean, full-bleed image without the decorative label bar. */
+.page-hero-visual .service-artwork--hero {
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 22px;
+}
+.page-hero-visual .service-artwork--hero .service-artwork__screen {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.page-hero-visual .service-artwork--hero img {
+  object-fit: contain !important;
+}
+.service-deliver-section .service-deliver-icon {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: .85rem;
+  place-items: center;
+  border-radius: 17px;
+  background: #eaf1fb;
+  color: #10284f;
+}
+.service-deliver-section .service-deliver-icon svg {
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.service-deliver-section .service-deliver-item h3 {
+  margin: 0 0 .45rem;
+  color: #10284f;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -.02em;
+}
+.service-deliver-section .service-deliver-item p {
+  margin: 0;
+  color: #344a63;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+@media (max-width: 900px) {
+  .service-deliver-section .service-deliver-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+@media (max-width: 560px) {
+  .service-deliver-heading-wrap {
+    margin-bottom: 1.5rem;
+  }
+  .service-deliver-section .service-deliver-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .service-deliver-section .service-deliver-item {
+    padding: 1.2rem 1.15rem 1.25rem 1.35rem;
+  }
 }

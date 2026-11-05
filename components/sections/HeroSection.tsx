@@ -48,7 +48,7 @@ const slides = [
     primaryLabel: "Explore IT & Talent Solutions",
     primaryHref: "/services/it-solutions",
     badgeTitle: "End-to-End Delivery Partner",
-    badgeNote: "TDX Migration · Multi-Stage QA · Specialist Staffing",
+    badgeNote: "Content Migration · Multi-Stage QA · Specialist Staffing",
   },
 ] as const;
 
