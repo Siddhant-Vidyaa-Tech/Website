@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, startTransition, type KeyboardEvent } from "react";
+import { useState, useEffect, useMemo, useRef, startTransition, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/lib/navigation";
@@ -41,14 +41,48 @@ const serviceGroups = [
   },
 ];
 
+type SearchResult = {
+  label: string;
+  href: string;
+  description?: string;
+  category: string;
+};
+
+const allPages: SearchResult[] = (() => {
+  const results: SearchResult[] = [];
+  for (const grp of serviceGroups) {
+    for (const item of grp.items) {
+      results.push({ ...item, category: grp.group });
+    }
+  }
+  for (const item of navigation) {
+    if (item.children) {
+      for (const child of item.children) {
+        if (child.href.startsWith("/industries")) {
+          results.push({ label: child.label, href: child.href, description: child.description, category: "Industries" });
+        }
+      }
+    } else {
+      results.push({ label: item.label, href: item.href, category: "Pages" });
+    }
+  }
+  results.push({ label: "Case Studies", href: "/case-studies", category: "Pages" });
+  results.push({ label: "Contact Us", href: "/contact-us", category: "Pages" });
+  return results;
+})();
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const accordionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -88,12 +122,63 @@ export default function Header() {
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
-      mobileMenuRef.current?.querySelector<HTMLElement>("a, button")?.focus();
-    } else {
-      document.body.style.overflow = "";
+      const timer = setTimeout(() => searchInputRef.current?.focus(), 350);
+      return () => {
+        clearTimeout(timer);
+        document.body.style.overflow = "";
+      };
     }
-    return () => { document.body.style.overflow = ""; };
+    document.body.style.overflow = "";
   }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen) {
+      setSearchQuery("");
+      setMobileExpanded(null);
+    }
+  }, [mobileOpen]);
+
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return null;
+    const q = searchQuery.toLowerCase();
+    return allPages.filter(
+      (p) =>
+        p.label.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q),
+    );
+  }, [searchQuery, allPages]);
+
+  const toggleAccordion = (label: string) => {
+    setMobileExpanded((prev) => (prev === label ? null : label));
+  };
+
+  useEffect(() => {
+    for (const key of Object.keys(accordionRefs.current)) {
+      const el = accordionRefs.current[key];
+      if (!el) continue;
+      const isOpen = mobileExpanded === key || searchQuery.trim() !== "";
+      if (isOpen) {
+        el.style.maxHeight = `${el.scrollHeight}px`;
+      } else {
+        el.style.maxHeight = "0px";
+      }
+    }
+  }, [mobileExpanded, searchQuery]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onResize = () => {
+      for (const key of Object.keys(accordionRefs.current)) {
+        const el = accordionRefs.current[key];
+        if (el && (mobileExpanded === key || searchQuery.trim() !== "")) {
+          el.style.maxHeight = `${el.scrollHeight}px`;
+        }
+      }
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [mobileOpen, mobileExpanded, searchQuery]);
 
   const handleMobileMenuKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
@@ -102,7 +187,7 @@ export default function Header() {
       return;
     }
     if (event.key !== "Tab") return;
-    const focusable = mobileMenuRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+    const focusable = mobileMenuRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled]), input:not([disabled])");
     if (!focusable?.length) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -114,6 +199,73 @@ export default function Header() {
       first.focus();
     }
   };
+
+  const closeMobile = () => setMobileOpen(false);
+
+  const renderMobileServices = () => {
+    if (searchResults) {
+      const filtered = searchResults.filter((r) => r.href.startsWith("/services"));
+      if (filtered.length === 0) return <p className="px-4 py-3 text-sm text-slate-400">No matching services</p>;
+      return filtered.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="block py-2.5 px-2 text-sm font-medium text-slate-600 hover:text-[var(--primary)] transition-colors"
+          onClick={closeMobile}
+        >
+          {item.label}
+        </Link>
+      ));
+    }
+    return serviceGroups.map((grp) => (
+      <div key={grp.group} className="space-y-0.5">
+        <p className="px-2 py-1.5 text-[11px] font-extrabold uppercase tracking-wider text-[var(--accent)]">
+          {grp.group}
+        </p>
+        {grp.items.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="block py-2.5 px-2 text-sm font-medium text-slate-600 hover:text-[var(--primary)] transition-colors"
+            onClick={closeMobile}
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+    ));
+  };
+
+  const renderMobileIndustries = () => {
+    const industriesNav = navigation.find((n) => n.label === "Industries");
+    if (!industriesNav?.children) return null;
+    if (searchResults) {
+      const filtered = searchResults.filter((r) => r.href.startsWith("/industries"));
+      if (filtered.length === 0) return <p className="px-4 py-3 text-sm text-slate-400">No matching industries</p>;
+      return filtered.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="block py-2.5 px-2 text-sm font-medium text-slate-600 hover:text-[var(--primary)] transition-colors"
+          onClick={closeMobile}
+        >
+          {item.label}
+        </Link>
+      ));
+    }
+    return industriesNav.children.map((child) => (
+      <Link
+        key={child.href}
+        href={child.href}
+        className="block py-2.5 px-2 text-sm font-medium text-slate-600 hover:text-[var(--primary)] transition-colors"
+        onClick={closeMobile}
+      >
+        {child.label}
+      </Link>
+    ));
+  };
+
+  const searching = searchQuery.trim() !== "";
 
   return (
     <header
@@ -187,9 +339,9 @@ export default function Header() {
                       role="menu"
                     >
                       {isServices ? (
-                        <div className="grid grid-cols-2 gap-4 p-2">
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                           {serviceGroups.map((grp) => (
-                            <div key={grp.group} className="space-y-1">
+                            <div key={grp.group} className="space-y-0.5">
                               <p className="px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-[var(--accent)]">
                                 {grp.group}
                               </p>
@@ -238,7 +390,7 @@ export default function Header() {
                           ))}
                         </div>
                       )}
-                      <div className="mt-2 pt-2.5 px-3 border-t border-slate-100 flex items-center justify-between bg-slate-50/70 -mx-4 -mb-4 p-3 rounded-b-[19px]">
+                      <div className="mt-2 pt-2.5 px-3 border-t border-slate-100 flex items-center justify-between bg-slate-50/70 -mx-[.85rem] -mb-[.85rem] p-3 rounded-b-[13px]">
                         <span className="text-xs text-slate-500 font-medium">
                           WCAG 2.2 AA compliant delivery at scale
                         </span>
@@ -300,29 +452,84 @@ export default function Header() {
       <div
         ref={mobileMenuRef}
         id="mobile-menu"
-        className={`mobile-menu-panel lg:hidden fixed left-0 right-0 top-16 bg-white z-40 overflow-y-auto transition-all duration-300 ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`lg:hidden mobile-drawer ${mobileOpen ? "mobile-drawer--open" : ""}`}
         aria-hidden={!mobileOpen}
         inert={!mobileOpen}
         onKeyDown={handleMobileMenuKeyDown}
       >
-        <nav aria-label="Mobile navigation" className="container py-6 space-y-1">
-          {navigation.map((item) => (
-            <div key={item.label}>
-              {item.children ? (
+        <div className="mobile-drawer__overlay" onClick={closeMobile} />
+        <div className="mobile-drawer__panel">
+          <div className="mobile-drawer__search">
+            <svg
+              className="w-5 h-5 text-slate-400 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              ref={searchInputRef}
+              type="search"
+              placeholder="Search all services & industries..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 bg-transparent text-sm text-slate-900 placeholder:text-slate-400 outline-none"
+              aria-label="Search navigation"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="text-slate-400 hover:text-slate-600 flex-shrink-0"
+                aria-label="Clear search"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          <nav aria-label="Mobile navigation" className="mobile-drawer__nav">
+            {searchResults ? (
+              <div className="space-y-1">
+                {searchResults.length === 0 ? (
+                  <p className="px-4 py-6 text-center text-sm text-slate-400">
+                    No results for &ldquo;{searchQuery}&rdquo;
+                  </p>
+                ) : (
+                  searchResults.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block px-4 py-3 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={closeMobile}
+                    >
+                      <span className="block text-sm font-semibold text-slate-900">{item.label}</span>
+                      {item.description && (
+                        <span className="block text-xs text-slate-500 mt-0.5">{item.description}</span>
+                      )}
+                      <span className="block text-[10px] font-bold uppercase tracking-wider text-[var(--accent)] mt-1">
+                        {item.category}
+                      </span>
+                    </Link>
+                  ))
+                )}
+              </div>
+            ) : (
+              <div className="space-y-1">
+                {/* What We Do - Services accordion */}
                 <div>
                   <button
-                    className="flex items-center justify-between w-full px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl"
-                    onClick={() =>
-                      setActiveDropdown(activeDropdown === item.label ? null : item.label)
-                    }
-                    aria-expanded={activeDropdown === item.label}
+                    className="flex items-center justify-between w-full px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl transition-colors"
+                    onClick={() => toggleAccordion("What We Do")}
+                    aria-expanded={mobileExpanded === "What We Do"}
                   >
-                    {item.label}
+                    What We Do
                     <svg
-                      className={`w-4 h-4 transition-transform duration-200 ${
-                        activeDropdown === item.label ? "rotate-180 text-[var(--accent)]" : ""
+                      className={`w-4 h-4 transition-transform duration-300 ${
+                        mobileExpanded === "What We Do" ? "rotate-180 text-[var(--accent)]" : ""
                       }`}
                       fill="none"
                       viewBox="0 0 24 24"
@@ -332,56 +539,90 @@ export default function Header() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  {activeDropdown === item.label && (
-                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-slate-200 pl-4">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block py-2 px-2 text-sm font-medium text-slate-600 hover:text-[var(--primary)] transition-colors"
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
+                  <div
+                    ref={(el) => { accordionRefs.current["What We Do"] = el; }}
+                    className="mobile-accordion"
+                  >
+                    <div className="ml-4 mt-1 border-l-2 border-slate-200 pl-4 pb-2 space-y-0.5">
+                      {renderMobileServices()}
                       <Link
-                        href={item.href}
-                        className="block py-2 px-2 text-sm font-bold text-[var(--accent)]"
-                        onClick={() => setMobileOpen(false)}
+                        href="/services"
+                        className="block py-2.5 px-2 text-sm font-bold text-[var(--accent)]"
+                        onClick={closeMobile}
                       >
-                        View all →
+                        View all services →
                       </Link>
                     </div>
-                  )}
+                  </div>
                 </div>
-              ) : (
+
+                {/* Industries accordion */}
+                <div>
+                  <button
+                    className="flex items-center justify-between w-full px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl transition-colors"
+                    onClick={() => toggleAccordion("Industries")}
+                    aria-expanded={mobileExpanded === "Industries"}
+                  >
+                    Industries
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-300 ${
+                        mobileExpanded === "Industries" ? "rotate-180 text-[var(--accent)]" : ""
+                      }`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <div
+                    ref={(el) => { accordionRefs.current["Industries"] = el; }}
+                    className="mobile-accordion"
+                  >
+                    <div className="ml-4 mt-1 border-l-2 border-slate-200 pl-4 pb-2 space-y-0.5">
+                      {renderMobileIndustries()}
+                      <Link
+                        href="/industries"
+                        className="block py-2.5 px-2 text-sm font-bold text-[var(--accent)]"
+                        onClick={closeMobile}
+                      >
+                        View all industries →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simple links */}
+                {navigation
+                  .filter((item) => !item.children)
+                  .map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="block px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl transition-colors"
+                      onClick={closeMobile}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 <Link
-                  href={item.href}
-                  className="block px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl"
-                  onClick={() => setMobileOpen(false)}
+                  href="/case-studies"
+                  className="block px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl transition-colors"
+                  onClick={closeMobile}
                 >
-                  {item.label}
+                  Case Studies
                 </Link>
-              )}
-            </div>
-          ))}
-          <Link
-            href="/case-studies"
-            className="block px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50 rounded-xl"
-            onClick={() => setMobileOpen(false)}
-          >
-            Case Studies
-          </Link>
-          <div className="pt-6 border-t border-slate-200 mt-4">
-            <Link
-              href="/contact-us"
-              className="btn btn-primary w-full text-center"
-              onClick={() => setMobileOpen(false)}
-            >
+              </div>
+            )}
+          </nav>
+
+          <div className="mobile-drawer__footer">
+            <Link href="/contact-us" className="btn btn-primary w-full text-center" onClick={closeMobile}>
               Let&apos;s Talk →
             </Link>
           </div>
-        </nav>
+        </div>
       </div>
     </header>
   );
